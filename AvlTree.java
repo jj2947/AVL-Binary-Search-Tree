@@ -2,6 +2,28 @@ public class AvlTree {
 
   Node root;
 
+  public AvlTree add(int value) {
+    root = add(root, value);
+    return this;
+  }
+
+  public boolean contains(int value) {
+    return contains(root, value);
+  }
+
+  private boolean contains(Node node, int value) {
+    if (node == null) {
+      return false;
+    }
+    if (value < node.value) {
+      return contains(node.left, value);
+    } else if (value > node.value) {
+      return contains(node.right, value);
+    } else {
+      return true;
+    }
+  }
+
   private int getHeight(Node node) {
     if (node == null) {
       return 0;
@@ -10,7 +32,9 @@ public class AvlTree {
   }
 
   private int getBalance(Node node) {
-    if (node == null) return 0;
+    if (node == null) {
+      return 0;
+    }
     return getHeight(node.left) - getHeight(node.right);
   }
 
