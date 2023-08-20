@@ -63,4 +63,46 @@ public class AvlTree {
 
     return rightNode;
   }
+
+  private Node add(Node node, int value) {
+    if (node == null) {
+      return new Node(value);
+    }
+
+    if (value < node.value) {
+      node.left = add(node.left, value);
+    } else if (value > node.value) {
+      node.right = add(node.right, value);
+    } else {
+      return node;
+    }
+
+    node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+
+    return rotate(node, value);
+  }
+
+  private Node rotate(Node node, int value) {
+    int balance = getBalance(node);
+
+    // Left-Left case
+    if (balance > 1 && value < node.left.value) return rotateRight(node);
+
+    // Right-Right case
+    if (balance < -1 && value > node.right.value) return rotateLeft(node);
+
+    // Left-Right case
+    if (balance > 1 && value > node.left.value) {
+      node.left = rotateLeft(node.left);
+      return rotateRight(node);
+    }
+
+    // Right-Left case
+    if (balance < -1 && value < node.right.value) {
+      node.right = rotateRight(node.right);
+      return rotateLeft(node);
+    }
+
+    return node;
+  }
 }
