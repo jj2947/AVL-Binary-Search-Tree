@@ -1,6 +1,11 @@
 public class AvlTree {
 
-    public void add (int value) {
-        root = insert(root, key);
+  Node root;
+
+  int getHeight(Node node) {
+    if (node == null){
+        return 0;
     }
+    return node.height;
+  }
 }
