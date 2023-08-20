@@ -26,4 +26,17 @@ public class AvlTree {
 
     return leftNode;
   }
+
+  private Node rotateLeft(Node node) {
+    Node rightNode = node.right;
+    Node middle = rightNode.left;
+
+    rightNode.left = node;
+    node.right = middle;
+
+    node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+    rightNode.height = Math.max(getHeight(rightNode.left), getHeight(rightNode.right)) + 1;
+
+    return rightNode;
+  }
 }
