@@ -86,10 +86,14 @@ public class AvlTree {
     int balance = getBalance(node);
 
     // Left-Left case
-    if (balance > 1 && value < node.left.value) return rotateRight(node);
+    if (balance > 1 && value < node.left.value) {
+      return rotateRight(node);
+    }
 
     // Right-Right case
-    if (balance < -1 && value > node.right.value) return rotateLeft(node);
+    if (balance < -1 && value > node.right.value) {
+      return rotateLeft(node);
+    }
 
     // Left-Right case
     if (balance > 1 && value > node.left.value) {
@@ -104,5 +108,26 @@ public class AvlTree {
     }
 
     return node;
+  }
+
+  public StringBuilder toString(StringBuilder prefix, boolean isTail, StringBuilder sb, Node node) {
+    if (node.right != null) {
+      toString(
+          new StringBuilder().append(prefix).append(isTail ? "│   " : "    "),
+          false,
+          sb,
+          node.right);
+    }
+    sb.append(prefix).append(isTail ? "└── " : "┌── ").append(node.value).append("\n");
+    if (node.left != null) {
+      toString(
+          new StringBuilder().append(prefix).append(isTail ? "    " : "│   "), true, sb, node.left);
+    }
+    return sb;
+  }
+
+  @Override
+  public String toString() {
+    return this.toString(new StringBuilder(), true, new StringBuilder(), root).toString();
   }
 }
